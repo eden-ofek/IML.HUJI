@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 
 
-def split_train_test(X: pd.DataFrame, y: pd.Series, train_proportion: float = .25) \
+def split_train_test(X: pd.DataFrame, y: pd.Series, train_proportion: float = .75) \
         -> Tuple[pd.DataFrame, pd.Series, pd.DataFrame, pd.Series]:
     """
     Split given sample to a training- and testing sample
@@ -33,7 +33,18 @@ def split_train_test(X: pd.DataFrame, y: pd.Series, train_proportion: float = .2
         Responses of test samples
 
     """
-    raise NotImplementedError()
+    data_base = X.copy()
+    data_base[y.name] = y.values
+
+    train_X = data_base.sample(frac=train_proportion)
+    test_X = data_base.drop(train_X.index)
+    train_y = train_X[y.name]
+    test_y = test_X[y.name]
+
+    train_X.pop(y.name)
+    test_X.pop(y.name)
+
+    return train_X, train_y, test_X, test_y
 
 
 def confusion_matrix(a: np.ndarray, b: np.ndarray) -> np.ndarray:
@@ -55,3 +66,10 @@ def confusion_matrix(a: np.ndarray, b: np.ndarray) -> np.ndarray:
         while value `j` vas found in vector `b`
     """
     raise NotImplementedError()
+
+if __name__ == '__main__':
+    d = {'0': 1, '1': 2, '2': 3}
+    ser = pd.Series(data=d, index=['0', '1', '2'])
+    df = pd.DataFrame(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]),
+                       columns=['a', 'b', 'c'])
+    split_train_test(df, ser, 0.5)
