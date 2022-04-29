@@ -110,7 +110,7 @@ class Perceptron(BaseEstimator):
             Predicted responses of given samples
         """
         # split to two cases: x is one sample or x is set of samples
-        
+
         if self.include_intercept_:
             intercept_col = np.ones(1).reshape(-1, 1)
             X = np.insert(X, 0, intercept_col, axis=1)
@@ -137,10 +137,7 @@ class Perceptron(BaseEstimator):
             Performance under missclassification loss function
         """
         from ...metrics import misclassification_error
-<<<<<<< HEAD
+
         y_pred = self.predict(X)
         error = misclassification_error(y, y_pred)
         return error
-=======
-        raise NotImplementedError()
->>>>>>> 3fa957a6be43ab2e10b164df15f2ceccb848d640
