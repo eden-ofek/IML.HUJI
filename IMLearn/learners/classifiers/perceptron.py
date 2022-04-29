@@ -28,11 +28,9 @@ class Perceptron(BaseEstimator):
         Coefficients vector fitted by Perceptron algorithm. To be set in
         `Perceptron.fit` function.
 
-    training_loss_: array of floats
-        holds the loss value of the algorithm during training.
-        training_loss_[i] is the loss value of the i'th training iteration.
-        to be filled in `Perceptron.fit` function.
-
+    callback_: Callable[[Perceptron, np.ndarray, int], None]
+            A callable to be called after each update of the model while fitting to given data
+            Callable function should receive as input a Perceptron instance, current sample and current response
     """
 
     def __init__(self,
@@ -53,21 +51,6 @@ class Perceptron(BaseEstimator):
         callback: Callable[[Perceptron, np.ndarray, int], None]
             A callable to be called after each update of the model while fitting to given data
             Callable function should receive as input a Perceptron instance, current sample and current response
-
-        Attributes
-        ----------
-        include_intercept_: bool
-            Should fitted model include an intercept or not
-
-        max_iter): int, default = 1000
-            Maximum number of passes over training data
-
-        callback_: Callable[[Perceptron, np.ndarray, int], None]
-            A callable to be called after each update of the model while fitting to given data
-            Callable function should receive as input a Perceptron instance, current sample and current response
-
-        coefs_: ndarray of shape (n_features,) or (n_features+1,)
-            Coefficients vector fitted by Perceptron. To be set in `Perceptron.fit` function.
         """
         super().__init__()
         self.include_intercept_ = include_intercept
@@ -154,6 +137,10 @@ class Perceptron(BaseEstimator):
             Performance under missclassification loss function
         """
         from ...metrics import misclassification_error
+<<<<<<< HEAD
         y_pred = self.predict(X)
         error = misclassification_error(y, y_pred)
         return error
+=======
+        raise NotImplementedError()
+>>>>>>> 3fa957a6be43ab2e10b164df15f2ceccb848d640
